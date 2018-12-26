@@ -1,20 +1,24 @@
 #!/bin/sh
 
-if [ ! $# -eq 2 ] ; then
-  echo "ERROR: Improper argument usage.\n"
+Usage () {
   echo "Usage:"
   echo "  ./run_tests.sh <GIT_REPO_URL> <PATH_TO_TESTS>"
   echo "EX:" 
   echo "  ./run_tests.sh https://github.com/quii/learn-go-with-tests.git http-server/v5/"
   echo
+}
+
+if [ $# -eq 0 ] ; then
+  echo "ERROR: Improper argument usage.\n"
+  Usage
   exit 1
 elif [ $1 = "-h" ] ; then
   echo "HELP"
-  echo "Usage:"
-  echo "  ./run_tests.sh <GIT_REPO_URL> <PATH_TO_TESTS>"
-  echo "EX:" 
-  echo "  ./run_tests.sh https://github.com/quii/learn-go-with-tests.git http-server/v5/"
-  echo
+  Usage
+  exit 1
+elif [ ! $# -eq 2 ] ; then  
+  echo "ERROR: Improper argument usage.\n"
+  Usage
   exit 1
 fi
 
@@ -52,6 +56,7 @@ while [ $totaljobs != 0 ] ; do
       echo
     fi
   done;
+  sleep 1
 done;
 
 kubectl get events -l test-run=$testrunname

@@ -2,10 +2,15 @@
 I have written and setup a distributed CI testing environment to run with any GO Lang Project. This can be modified to run with other languages as well.
 The below script is dynamic enough that whenever you make a code change or add a new test case, none of this code will need to be changed, it will simply pull in the changes as they are committed on runtime.
 
+#### Note
+I went with the method of specifying the source code rather than using a pre-built image as this is not my code. In a normal scenario if there is a code change, that normally triggers a new build for that image. If this was the case, I would change this implementation to just use that new image everytime, rather than pulling the source code, and hooking it up to each test-case pod. With this method you can really fire this script off on any GO repo, and run it against. If you perfer the baked image, I can change it to that.
+
 ### Dockerfile
-Per request I have created a basic Dockerfile, which pulls in the latest GOLang image and runs all the test cases.
-Link: https://cloud.docker.com/repository/docker/coultenholt/learn-go-with-tests
-Example Run:
+Per request I have created a basic Dockerfile, which pulls in the latest GOLang image and runs all the test cases  https://cloud.docker.com/repository/docker/coultenholt/learn-go-with-tests. 
+
+#### Note
+This is not the image I am using during the actual run. I think you wanted just an image with the code built into it. For the actual run, I am using the standard `golang` image and adding the source code to the pod, for it to then run tests against.
+
 ```bash
 $ docker run -it --rm coultenholt/learn-go-with-tests
 === RUN   TestRecordingWinsAndRetrievingThem
