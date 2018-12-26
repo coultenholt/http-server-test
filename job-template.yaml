@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: unittest-{{job_name}}
+  labels:
+    jobgroup: unittest
+spec:
+  template:
+    metadata:
+      name: unittest
+      labels:
+        jobgroup: unittest
+    spec:
+      containers:
+      - name: unittest
+        image: golang
+        volumeMounts:
+        - mountPath: /go/src/{{repo_name}}
+          name: src-code-volume
+        command: ["bash"]
+        args: ["-c",  "cd /go/src/{{path_name}}; go test -v -run {{test_name}}"]
+      volumes:
+      - name: src-code-volume
+        hostPath:
+          path: {{volume_path}}
+      restartPolicy: Never
