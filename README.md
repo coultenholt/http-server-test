@@ -106,3 +106,7 @@ spec:
           path: {{volume_path}}
       restartPolicy: Never
 ```
+
+
+### Notes/Takeaways
+This is not actually my favorite approach. It is a way to perform the task, but there are other ways. My personal favorite would be writing a full blown test controller. I would implement something like this - https://srossross.github.io/k8s-test-controller/. We could use this method, where you essentially have a controller constantly watching the cluster to see when the custom types of `TestTemplate` or `TestRun` are created or modified. It will then run `pods` based off the template for a `TestRun`. This will then trigger kubernetes `events` that can be interrogated to see when a test has been ran and if has failed or not. I implemented this method in an alternate folder, but I assumed you did want me to use a 3rd party controller, so I did not use it as my main solution. If you would like to browse my implementation of that, its under the `test-controller` folder in this repo.
