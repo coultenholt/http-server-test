@@ -1,0 +1,6 @@
+apiVersion: srossross.github.io/v1alpha1
+kind: TestRun
+metadata:
+  name: {{test_run_name}}
+spec:
+  max-jobs: 10
